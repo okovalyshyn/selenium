@@ -1,15 +1,12 @@
 package sel.course;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import java.util.concurrent.TimeUnit;
 
 //Created by okovalyshyn on 11/17/2016.
-public class LoginTest extends SetDriver
-{
+public class LoginTest extends SetDriver{
     @Test
     public void login(){
         wd.navigate().to("http://localhost/litecart/admin/login.php");

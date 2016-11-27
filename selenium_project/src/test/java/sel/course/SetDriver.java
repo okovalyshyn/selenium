@@ -8,13 +8,15 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 //Created by okovalyshyn on 11/17/2016.
 public class SetDriver {
-    public WebDriver wd;
+    public static WebDriver wd;
 
     @Before
     public void start(){
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setBrowserName("chrome");
-        wd = new ChromeDriver(caps);
+        if (wd==null){
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setBrowserName("chrome");
+            wd = new ChromeDriver(caps);
+        }
     }
 
     @After
