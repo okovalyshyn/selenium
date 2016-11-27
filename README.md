@@ -3,3 +3,5 @@
 added L2_task1 - Задание 1. Подготовьте инфраструктуру - see SimpleTest.java
 
 added L2_task3 - Задание 3. Сделайте сценарий логина - see LoginTest.java
+
+added L4_task8 - Задание 8. Сделайте сценарий, проверяющий наличие стикеров у товаров - see StickerTest.java
