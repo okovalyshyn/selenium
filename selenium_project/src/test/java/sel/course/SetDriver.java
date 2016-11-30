@@ -17,6 +17,25 @@ public class SetDriver {
             caps.setBrowserName("chrome");
             wd = new ChromeDriver(caps);
         }
+
+        //firefox
+        //DesiredCapabilities caps = new DesiredCapabilities();
+        //caps.setCapability(FirefoxDriver.MARIONETTE, true);
+        //wd = new FirefoxDriver(caps);
+        //wd.manage().window().maximize();
+
+        //ie
+        //DesiredCapabilities caps = new DesiredCapabilities();
+        //caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+        //caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);
+        //caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+        //wd = new InternetExplorerDriver(caps);
+        //wd.manage().window().maximize();
+
+        //System.out.println(((HasCapabilities) wd).getCapabilities());
+
+        //wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //wait = new WebDriverWait(wd, 10);
     }
 
     @After
