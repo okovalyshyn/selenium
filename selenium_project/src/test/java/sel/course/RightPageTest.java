@@ -30,6 +30,7 @@ public class RightPageTest extends SetDriver {
 
         firstItem.click();
         System.out.println("Checking the next page: " + wd.getCurrentUrl());
+        System.out.println("Page title is: " + wd.getTitle());
 
         WebElement itemNameOpenedWindow = wd.findElement(By.cssSelector("div#box-product h1"));
         String itemNameOpened = itemNameOpenedWindow.getAttribute("textContent");
