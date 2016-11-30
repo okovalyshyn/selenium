@@ -10,4 +10,4 @@ added L4_task7 - Задание 7. Сделайте сценарий, прохо
 
 added L5_task10 - Задание 10. Проверить, что открывается правильная страница товара - see RighPageTest.java
 
-added L6_task11 - Задание 11. Сделайте сценарий регистрации пользователя - see RigistrationTest.java
+added L6_task11 - Задание 11. Сделайте сценарий регистрации пользователя - see RegistrationTest.java
