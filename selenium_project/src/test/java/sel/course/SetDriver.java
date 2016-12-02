@@ -5,10 +5,12 @@ import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 //Created by okovalyshyn on 11/17/2016.
 public class SetDriver {
     public static WebDriver wd;
+    public WebDriverWait wait;
 
     @Before
     public void start(){
@@ -16,6 +18,7 @@ public class SetDriver {
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setBrowserName("chrome");
             wd = new ChromeDriver(caps);
+            wait = new WebDriverWait(wd, 15);
         }
 
         //firefox
@@ -38,8 +41,8 @@ public class SetDriver {
         //wait = new WebDriverWait(wd, 10);
     }
 
-   // @After
-   // public void quit(){
- //       wd.quit();
-   // }
+    @After
+    public void quit(){
+        wd.quit();
+    }
 }
