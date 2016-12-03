@@ -13,3 +13,5 @@ added L5_task10 - Задание 10. Проверить, что открывае
 added L6_task11 - Задание 11. Сделайте сценарий регистрации пользователя - see RegistrationTest.java
 
 added L5_task9 - Задание 9. Проверить сортировку стран и геозон в админке - see SortingTest.java
+
+added L6_task12 - Задание 12. Сделайте сценарий добавления товара - see AddItem.java + selenium_project/1.png

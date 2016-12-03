@@ -3,23 +3,20 @@ package sel.course;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 //Created by okovalyshyn on 11/30/2016.
 
 public class AddItem extends SetDriver {
-    private  String itemName = "Crested duck";
+    private  String itemName = "Crested duck NEW";
 
     @Test
-    public void addItem(){
+    public void addItem() throws FileNotFoundException {
         LoginTest test = new LoginTest();
         test.login();
 
@@ -62,22 +59,21 @@ public class AddItem extends SetDriver {
         wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement main = wd.findElement(By.cssSelector("div#tab-general input[value='0'][type='checkbox']"));
         String mainStatus = main.getAttribute("checked");
-        if (mainStatus=="true"){
+        if (mainStatus!=null){
             main.click();
         }
-
         WebElement rubberDuck = wd.findElement(By.cssSelector("div#tab-general input[value='1'][type='checkbox']"));
         String rubberDuckStatus = rubberDuck.getAttribute("checked");
-        if (rubberDuckStatus=="null"){
+        if (rubberDuckStatus==null){
             rubberDuck.click();
         }
-
         WebElement subcategory = wd.findElement(By.cssSelector("div#tab-general input[value='2'][type='checkbox']"));
         String subcategoryStatus = subcategory.getAttribute("checked");
-        if (subcategoryStatus=="true"){
+        if (subcategoryStatus!=null){
             subcategory.click();
         }
 
+        wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         wd.findElement(By.cssSelector("div#tab-general input[value='1-3'][type='checkbox']")).click();
 
         WebElement quantity = wd.findElement(By.cssSelector("div#tab-general input[name='quantity']"));
@@ -87,20 +83,15 @@ public class AddItem extends SetDriver {
         Select soldOut = new Select (wd.findElement(By.cssSelector("div#tab-general select[name='sold_out_status_id']")));
         soldOut.selectByValue("2");
 
-       // WebElement uploadImage = wd.findElement(By.cssSelector("div#tab-general input[name='new_images[]']"));
-       // uploadImage.click();
-
-       // wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-       // uploadImage.sendKeys("C:\\xampp\\htdocs\\litecart\\images\\products\\test1-1.jpg");
-       // wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-       // uploadImage.sendKeys(Keys.ENTER);
-
+        WebElement uploadImage = wd.findElement(By.cssSelector("div#tab-general input[name='new_images[]']"));
+        uploadImage.sendKeys(Paths.get(System.getProperty("user.dir")) + "\\1.png");
 
         WebElement validFrom = wd.findElement(By.cssSelector("div#tab-general input[name='date_valid_from'][type='date']"));
-        validFrom.sendKeys("11302016");
+        validFrom.sendKeys("11.11.2016");
 
         WebElement validTo = wd.findElement(By.cssSelector("div#tab-general input[name='date_valid_to'][type='date']"));
-        validTo.sendKeys("12302016");
+        validTo.sendKeys("01.01.2017");
+
 
         //Information tab
         wd.findElement(By.cssSelector("div.tabs a[href='#tab-information']")).click();
@@ -148,31 +139,38 @@ public class AddItem extends SetDriver {
 
         //save
         wd.findElement(By.cssSelector("span.button-set button[type='submit'][value='Save']")).click();
-    //    wait.until(titleIs("Catalog | My Store"));
+        //wait.until(titleIs("Catalog | My Store"));
         if (!wd.getTitle().equals("Catalog | My Store")){
             AssertionError assertError = new AssertionError();
             System.out.println("FAILED: " +assertError.getMessage());
             System.out.println("Page URL is " + wd.getCurrentUrl());
             Assert.fail();
         }
-        System.out.println("Current Page Title is: "+wd.getTitle());
+        System.out.println("Current Page Title is: " + wd.getTitle());
 
-        wd.findElement(By.linkText("Rubber Ducks"));
         WebElement itemsSecond = wd.findElement(By.cssSelector("table.dataTable tr.footer td"));
         String numSecond = itemsSecond.getAttribute("textContent");
         System.out.println("There are: " + numSecond);
 
-        isElementPresent(wd);
+        if (isElementPresent(wd))
+        {
+            System.out.println("Found created item '"+itemName+"' on the Catalog page");
+        }
+        else
+        {
+            AssertionError assertError = new AssertionError();
+            System.out.println("FAILED: " +assertError.getMessage());
+            System.out.println("Can not found created item on the Catalog page");
+            Assert.fail();
+        }
     }
 
     protected boolean isElementPresent(WebDriver wd){
         try{
             wd.findElement(By.linkText(itemName));
-            System.out.println("Found created item on the Catalog page");
             return true;
         }
         catch(NoSuchElementException e){
-            System.out.println("Can not found created item on the Catalog page");
             return false;
         }
     }
