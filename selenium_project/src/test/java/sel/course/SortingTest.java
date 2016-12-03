@@ -17,39 +17,79 @@ public class SortingTest extends SetDriver{
         test.login();
 
         wd.navigate().to("http://localhost/litecart/admin/?app=countries&doc=countries");
-
-        wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        System.out.println("Page URL " + wd.getCurrentUrl());
+        if (!wd.getTitle().equals("Countries | My Store")){
+            AssertionError assertError = new AssertionError("Can not open required page");
+            System.out.println("FAILED: Page title is "+wd.getTitle()+"" +assertError.getMessage());
+            Assert.fail();
+        }
+        System.out.println("Page Title is " + wd.getTitle());
+        String previousCountryName = null;
 
         List<WebElement> rows = wd.findElements(By.cssSelector("table.dataTable tr.row"));
         for (int j = 0; j < rows.size(); j++) {
-
-            List<WebElement> countries = wd.findElements(By.cssSelector("table.dataTable td a:not([title='Edit'])"));
-            //List <WebElement> countries = wd.findElements(By.xpath(".//table[@class='dataTable']/tbody/tr["+j+"]/td[6]"));
-            System.out.println(countries.get(j).getText());
-
-            for (int i = 1; i < countries.size(); i++) {
-                if (!(countries.get(i).getText().compareToIgnoreCase(countries.get(i - 1).getText()) > 0)) {
-                    AssertionError assertError = new AssertionError();
-                    System.out.println("FAILED: " + assertError.getMessage());
-                    System.out.println("Countries are NOT displayed in alphabetical order");
-                    Assert.fail();
-                }
+            String countryName = rows.get(j).findElements(By.cssSelector("td")).get(4).findElement((By.cssSelector("a"))).getText();
+            if (previousCountryName!=null && !(countryName.compareToIgnoreCase(previousCountryName) > 0)) {
+                AssertionError assertError = new AssertionError("Countries are NOT displayed in an alphabetical order");
+                System.out.println("FAILED: " + previousCountryName+ " "+ countryName+" "+assertError.getMessage());
+                Assert.fail();
             }
+            previousCountryName = countryName;
+            System.out.println(countryName);
 
+            String countryZone = rows.get(j).findElements(By.cssSelector("td")).get(5).getText();
+            if (!countryZone.equals("0")){
+                System.out.println("Found country "+countryName+" with "+countryZone+" zones");
+                WebElement countryLink = rows.get(j).findElements(By.cssSelector("td")).get(4).findElement((By.cssSelector("a")));
+                countryLink.click();
 
-            //for (WebElement tr : rows) {
-            // List<WebElement> columns = tr.findElements(By.tagName("td"));
-            // System.out.println("text " + columns.get(4).getText());
+                String previousZone = null;
+                List<WebElement> rowsZones = wd.findElements(By.cssSelector("table#table-zones tr"));
+                for (int k = 1; k < rowsZones.size()-1; k++) {
+                    String zone = rowsZones.get(k).findElements(By.cssSelector("td")).get(2).getText();
 
-            // for (WebElement cell : columns) {
-            //   columns.get(3).getText();
+                    if (previousZone!=null && !(zone.compareToIgnoreCase(previousZone) > 0)) {
+                        AssertionError assertError = new AssertionError("Zones are NOT displayed in an alphabetical order");
+                        System.out.println("FAILED:" + previousZone+ " "+ zone+" "+assertError.getMessage());
+                        Assert.fail();
+                    }
+                    previousZone = zone;
+                }
+                System.out.println(countryName +"'s zones are displayed in an alphabetical order");
 
-            //System.out.println("text " + cell.getText());
-            // System.out.println("text 4 " + columns.get(4).getText());
-            //}
-            //}
+                wd.navigate().to("http://localhost/litecart/admin/?app=countries&doc=countries");
+                rows = wd.findElements(By.cssSelector("table.dataTable tr.row"));
+            }
         }
 
+        wd.navigate().to("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
+        if (!wd.getTitle().equals("Geo Zones | My Store")) {
+            AssertionError assertError = new AssertionError("Can not open required page");
+            System.out.println("FAILED: Page title is " + wd.getTitle() + "" + assertError.getMessage());
+            Assert.fail();
+        }
+        System.out.println("Page title is " + wd.getTitle());
+
+        List<WebElement> geoZonesList = wd.findElements(By.cssSelector("table.dataTable tr.row"));
+        for (int t = 0; t < geoZonesList.size(); t++) {
+            WebElement geoZone = geoZonesList.get(t).findElements(By.cssSelector("td")).get(2).findElement((By.cssSelector("a")));
+            String geoZoneName = geoZone.getText();
+            geoZone.click();
+
+            String geoZonesPrevious = null;
+            List<WebElement> geoZonesCountryList = wd.findElements(By.cssSelector("table#table-zones tr"));
+            for (int y = 1; y < geoZonesCountryList.size() - 1; y++) {
+                String geoZones = geoZonesCountryList.get(y).findElements(By.cssSelector("td")).get(2).findElement((By.cssSelector("select option[selected='selected']"))).getText();
+
+                if (geoZonesPrevious != null && !(geoZones.compareToIgnoreCase(geoZonesPrevious) > 0)) {
+                AssertionError assertError = new AssertionError("Geo Zones are NOT displayed in an alphabetical order");
+                System.out.println("FAILED:" + geoZonesPrevious + " " + geoZones + " " + assertError.getMessage());
+                Assert.fail();
+                }
+                geoZonesPrevious = geoZones;
+            }
+            System.out.println(geoZoneName + "'s geo zones are displayed in an alphabetical order");
+            wd.navigate().to("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
+            geoZonesList = wd.findElements(By.cssSelector("table.dataTable tr.row"));
+        }
     }
 }
