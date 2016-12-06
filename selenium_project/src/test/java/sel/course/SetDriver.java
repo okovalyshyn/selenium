@@ -18,7 +18,7 @@ public class SetDriver {
             DesiredCapabilities caps = new DesiredCapabilities();
             caps.setBrowserName("chrome");
             wd = new ChromeDriver(caps);
-            wait = new WebDriverWait(wd, 20);
+            wait = new WebDriverWait(wd, 30);
         }
 
         //firefox
@@ -43,7 +43,6 @@ public class SetDriver {
 
     @After
     public void quit(){
-
         wd.quit();
     }
 }
