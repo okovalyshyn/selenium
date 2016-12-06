@@ -26,7 +26,7 @@ public class WindowsTest extends SetDriver {
         String linkUrl = link.getAttribute("href");
         System.out.println(linkUrl);
         //((JavascriptExecutor) wd).executeScript("window.open(\"http://www.google.com/\");");
-        ((JavascriptExecutor) wd).executeScript("window.open("+linkUrl+");");
+        ((JavascriptExecutor) wd).executeScript("window.open(\"" + linkUrl + "\");");
 
         for(String winHandle : wd.getWindowHandles()){
             wd.switchTo().window(winHandle);
@@ -34,9 +34,11 @@ public class WindowsTest extends SetDriver {
             System.out.println(windowNew);
         }
 
-        wd.findElement(By.cssSelector("div.jsb input[name='btnI']")).click();
         wd.close();
+
+// Switch back to original browser (first window)
         wd.switchTo().window(windowBefore);
+
 
 
     }
