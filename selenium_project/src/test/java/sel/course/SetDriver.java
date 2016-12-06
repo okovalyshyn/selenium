@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,10 +23,13 @@ public class SetDriver {
         }
 
         //firefox
+        //if (wd==null){
         //DesiredCapabilities caps = new DesiredCapabilities();
         //caps.setCapability(FirefoxDriver.MARIONETTE, true);
         //wd = new FirefoxDriver(caps);
         //wd.manage().window().maximize();
+        //wait = new WebDriverWait(wd, 30);
+        //}
 
         //ie
         //DesiredCapabilities caps = new DesiredCapabilities();
@@ -41,8 +45,8 @@ public class SetDriver {
         //wait = new WebDriverWait(wd, 10);
     }
 
-    @After
-    public void quit(){
-        wd.quit();
-    }
+    //@After
+    //public void quit(){
+   //     wd.quit();
+   // }
 }
