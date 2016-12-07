@@ -45,8 +45,8 @@ public class SetDriver {
         //wait = new WebDriverWait(wd, 10);
     }
 
-    //@After
-    //public void quit(){
-   //     wd.quit();
-   // }
+    @After
+    public void quit(){
+        wd.quit();
+    }
 }

@@ -3,8 +3,12 @@ package sel.course;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.Set;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
@@ -20,26 +24,35 @@ public class WindowsTest extends SetDriver {
         wd.findElement(By.xpath("//table[contains(@class, 'dataTable')]//tr[2]/td[7]/a")).click();
 
         String windowBefore = wd.getWindowHandle();
-        System.out.println(windowBefore);
+        System.out.println("Main windows is '"+wd.getTitle()+ "'; "+windowBefore);
 
-        WebElement link = wd.findElement(By.xpath(".//*[@id='content']/form/table[1]/tbody/tr[2]/td/a"));
-        String linkUrl = link.getAttribute("href");
-        System.out.println(linkUrl);
-        //((JavascriptExecutor) wd).executeScript("window.open(\"http://www.google.com/\");");
-        ((JavascriptExecutor) wd).executeScript("window.open(\"" + linkUrl + "\");");
+        List<WebElement> linksList = wd.findElements(By.cssSelector("td#content table a[target='_blank']"));
+        for (int i = 0; i < linksList.size(); i++) {
+            WebElement link = linksList.get(i);
+            String linkUrl = link.getAttribute("href");
 
-        for(String winHandle : wd.getWindowHandles()){
-            wd.switchTo().window(winHandle);
+            ((JavascriptExecutor) wd).executeScript("window.open(\"" + linkUrl + "\");");
+            waitForNumberOfWindowsToEqual(2);
+
+            for(String winHandle : wd.getWindowHandles()){
+                wd.switchTo().window(winHandle);
+            }
             String windowNew = wd.getWindowHandle();
-            System.out.println(windowNew);
+            System.out.println("\t New Window is '"+wd.getTitle() + "'. Page URL is '" + wd.getCurrentUrl()+"'. "+ windowNew);
+
+            wd.close();
+            wd.switchTo().window(windowBefore);
+            System.out.println("Page title is "+wd.getTitle());
         }
+    }
 
-        wd.close();
-
-// Switch back to original browser (first window)
-        wd.switchTo().window(windowBefore);
-
-
-
+    public void waitForNumberOfWindowsToEqual(final int numberOfWindows) {
+        new WebDriverWait(wd, 35) {
+        }.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver wd) {
+                return (wd.getWindowHandles().size() == numberOfWindows);
+            }
+        });
     }
 }
