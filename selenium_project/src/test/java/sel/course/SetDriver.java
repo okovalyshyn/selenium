@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -32,12 +33,15 @@ public class SetDriver {
         //}
 
         //ie
-        //DesiredCapabilities caps = new DesiredCapabilities();
-        //caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-        //caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);
-        //caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-        //wd = new InternetExplorerDriver(caps);
-        //wd.manage().window().maximize();
+        //if (wd==null) {
+            DesiredCapabilities caps = new DesiredCapabilities();
+            //caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+            //caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);
+            //caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+            //wd = new InternetExplorerDriver(caps);
+            //wd.manage().window().maximize();
+            //wait = new WebDriverWait(wd, 30);
+        //}
 
         //System.out.println(((HasCapabilities) wd).getCapabilities());
 
