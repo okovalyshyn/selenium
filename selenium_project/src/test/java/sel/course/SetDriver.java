@@ -34,7 +34,7 @@ public class SetDriver {
 
         //ie
         //if (wd==null) {
-            DesiredCapabilities caps = new DesiredCapabilities();
+            //DesiredCapabilities caps = new DesiredCapabilities();
             //caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
             //caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);
             //caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
@@ -50,7 +50,6 @@ public class SetDriver {
     }
 
     @After
-    public void quit(){
-        wd.quit();
-    }
+   public void quit(){
+     wd.quit();}
 }
