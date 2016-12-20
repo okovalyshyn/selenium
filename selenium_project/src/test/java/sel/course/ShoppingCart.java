@@ -3,6 +3,7 @@ package sel.course;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import sel.course.project.pageobjects.Application;
 
 import java.util.List;
 

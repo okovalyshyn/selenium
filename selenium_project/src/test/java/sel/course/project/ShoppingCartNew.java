@@ -1,16 +1,17 @@
-package sel.course.tests;
+package sel.course.project;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import sel.course.SetDriver;
+import sel.course.project.pageobjects.Application;
 
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 //Created by okovalyshyn on 12/19/2016.
-public class ShoppingCartNew extends SetDriver {
+public class ShoppingCartNew  {
     String firstItemTitle = "Blue Duck";
     String secondItemTitle = "Red Duck";
     String thirdItemTitle = "Purple Duck";
@@ -27,25 +28,66 @@ public class ShoppingCartNew extends SetDriver {
 
     @Test
     public void shoppingCartPO(){
-        wd.navigate().to("http://localhost/litecart/en/");
-        checkPreviousCartNumber();
+        Application app = new Application();
+
+        app.goToPage("http://localhost/litecart/en/");
+
+        previousNumber = app.mainPage.getPreviousCartNumber();
+
+        app.mainPage.selectItem(firstItemTitle);
+
+        app.itemPage.buyItem();
+        previousNumber++;
+        app.itemPage.checkCartNumber(previousNumber);
+
+        app.goToPage("http://localhost/litecart/en/");
+
+        app.mainPage.selectItem(firstItemTitle);
+
+
+        app.itemPage.buyItem();
+        previousNumber++;
+        app.itemPage.checkCartNumber(previousNumber);
+
+        app.goToPage("http://localhost/litecart/en/");
+
+        app.mainPage.selectItem(firstItemTitle);
+
+
+        app.itemPage.buyItem();
+        previousNumber++;
+        app.itemPage.checkCartNumber(previousNumber);
+
+        app.quit();
+
+
+
+
+        //wd.navigate().to("http://localhost/litecart/en/");
+        //checkPreviousCartNumber();
 
         //first item
-        selectItem(firstItemTitle);
-        checkCartNumber();
+        //selectItem(firstItemTitle);
+
+
+        //checkCartNumber();
 
         //second item
-        wd.navigate().to("http://localhost/litecart/en/");
-        selectItem(secondItemTitle);
-        checkCartNumber();
+        //wd.navigate().to("http://localhost/litecart/en/");
+        //selectItem(secondItemTitle);
+        //checkCartNumber();
 
         //third item
-        wd.navigate().to("http://localhost/litecart/en/");
-        selectItem(thirdItemTitle);
-        checkCartNumber();
+        //wd.navigate().to("http://localhost/litecart/en/");
+        //selectItem(thirdItemTitle);
+        //checkCartNumber();
 
         // Actions with Shopping Cart
-        openCart();
+
+
+
+
+        /*openCart();
         checkOrderTable();
 
         removeItem();
@@ -58,13 +100,16 @@ public class ShoppingCartNew extends SetDriver {
 
         removeItem();
         waitForTableToBeUpdated();
-        checkAllItemsDeleted();
+        checkAllItemsDeleted();*/
     }
 
 
-    private void selectItem(String itemTitle){
+    /*private void selectItem(String itemTitle){
         wd.findElement(By.cssSelector("div#box-most-popular a.link[title='"+itemTitle+"']")).click();
         wait.until(titleIs(itemTitle+" | Rubber Ducks | My Store"));
+
+
+
         wd.findElement(By.cssSelector("div.buy_now button[name='add_cart_product']")).click();
         previousNumber++;
     }
@@ -72,7 +117,7 @@ public class ShoppingCartNew extends SetDriver {
     private void checkPreviousCartNumber(){
         cartItems = wd.findElement(By.cssSelector("div#cart a.content span.quantity"));
         String cartItem = cartItems.getText();
-        int previousNumber = Integer.parseInt(String.valueOf(cartItem));
+        previousNumber = Integer.parseInt(String.valueOf(cartItem));
         System.out.println("Shopping cart contains "+previousNumber+" items");
     }
 
@@ -116,5 +161,5 @@ public class ShoppingCartNew extends SetDriver {
         WebElement noItems = wd.findElement(By.cssSelector("div#checkout-cart-wrapper p em"));
         String noItemsText = noItems.getText();
         System.out.println(noItemsText);
-    }
+    }*/
 }
