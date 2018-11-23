@@ -1,4 +1,4 @@
-# selenium_course - olga kovalyshyn
+# selenium_course
 
 added L2_task1 - Задание 1. Подготовьте инфраструктуру - see SimpleTest.java
 
